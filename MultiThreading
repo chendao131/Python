@@ -3,6 +3,8 @@ import time
 
 global_counter = 0
 
+# https://www.youtube.com/watch?v=4M6cvYiXQyU
+
 def increment_counter(x, lock):
     global global_counter
     
