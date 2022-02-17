@@ -99,3 +99,18 @@ cur.executemany("insert into lang values (?, ?)", lang_list) # And this is the n
 cur.execute("select * from lang where first_appeared=:year", {"year": 1972})  
 print(cur.fetchall())  
 con.close() 
+
+
+
+
+
+
+import wmi
+import win32api
+import win32net
+
+ip = "10.50.0.178"
+username = "vmadministrator"
+password = "_Sp0bcf0e565ed348414"
+from socket import *
+connection = wmi.WMI(ip, user=username, password=password)
