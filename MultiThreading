@@ -1,9 +1,8 @@
 from threading import Thread, Lock
 import time
 
+'''
 global_counter = 0
-
-# https://www.youtube.com/watch?v=4M6cvYiXQyU
 
 def increment_counter(x, lock):
     global global_counter
@@ -29,3 +28,31 @@ if __name__ == '__main__':
     t2.join()
     
     print(global_counter)
+    
+'''  
+    
+import requests, zipfile, io
+import concurrent.futures 
+urls = ["http://mlg.ucd.ie/files/datasets/multiview_data_20130124.zip",
+   "http://mlg.ucd.ie/files/datasets/movielists_20130821.zip",
+   "http://mlg.ucd.ie/files/datasets/bbcsport.zip",
+   "http://mlg.ucd.ie/files/datasets/movielists_20130821.zip",
+   "http://mlg.ucd.ie/files/datasets/3sources.zip"]
+
+def download_zips(url):
+   file_name = url.split("/")[-1]
+   response = requests.get(url)
+   sourceZip = zipfile.ZipFile(io.BytesIO(response.content))
+   print("\n Downloaded {} ".format(file_name))
+   sourceZip.close()
+
+def download_images_concurrently(file_url):
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as exector: 
+       exector.map(download_zips, file_url)
+       
+if __name__ == '__main__':
+    start_time = time.time()
+    #[download_images_concurrently(url) for url in urls]
+    download_images_concurrently(urls)
+    duration = time.time() - start_time
+    print(f"Time taken was: {duration} sec")
