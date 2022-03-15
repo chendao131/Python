@@ -60,13 +60,13 @@ def ProcessLargeTextFile():
     bunchsize = 1000000     # Experiment with different sizes 
     bunch = [] 
     with open("filepath", "r") as r, open("outfilepath", "w") as w: 
-    for line in r: 
-    x, y, z, rest = line.split(' ', 3) 
-    bunch.append(' '.join((x[:-3], y[:-3], z[:-3], rest))) 
-      if len(bunch) == bunchsize: 
-        w.writelines(bunch) 
-        bunch = [] 
-        w.writelines(bunch) 
+      for line in r: 
+        x, y, z, rest = line.split(' ', 3) 
+        bunch.append(' '.join((x[:-3], y[:-3], z[:-3], rest))) 
+        if len(bunch) == bunchsize: 
+          w.writelines(bunch) 
+          bunch = [] 
+      w.writelines(bunch) 
 
 
 # Sqlite: 
